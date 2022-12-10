@@ -55,7 +55,7 @@ export default function App() {
         change it you need to sign in using the NEAR Wallet. It is very simple,
         just use the button below.
         </p>
-        <p>
+        <p className="text-red-600">
         Do not worry, this app runs in the test network ("testnet"). It works
         just like the main network ("mainnet"), but using NEAR Tokens that are
         only for testing!
