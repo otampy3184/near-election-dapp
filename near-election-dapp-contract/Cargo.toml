@@ -1,0 +1,9 @@
+[package]
+name = "near-election-dapp-contract"
+version = "0.1.0"
+authors = ["django_freeman <o.tampodo.t.18@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
