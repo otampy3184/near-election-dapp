@@ -55,10 +55,53 @@ pub enum StorageKey {
     TokensPerOwnerInner{ account_id_hash: CryptoHash },
     TokensPerKindInner { token_kind: TokenKind },
     TokensById,
-    TokenMetadataId,
+    TokenMetadataById,
     TokensPerTypeInner: { token_type_hash: CryptoHash },
     NFTContractMetadata,
     LikesPerCandidate,
     AddedVoterList,
     VotedVoterList,
+}
+
+#[near_bindgen]
+impl Contract {
+    //初期化関数であることを宣言
+    #[init]
+    // new関数で変数を初期化していく
+    // newでインスタンスを生成し、Result型のVector (配列)を作成し、unwrap()メソッドでResult<Vec<u8>>Vec<u8>に変換している
+    pub fn new(owner_id: AccountId, metadata: NFTContractMetadata) -> Self {
+        let this = Self{
+            owner_id,
+            tokens_per_owner: LookupMap::new(StorageKey::TokensPerOwner.try_to_vec().unwrap()),
+            tokens_per_kind: LookupMap::new(StorageKey::TokensPerKind.try_to_vec().unwrap()),
+            tokens_by_id: LookupMap::new(StorageKey::TokensById.try_to_vec().unwrap()),
+            token_metadata_by_id: UnorderedMap::new(
+                StorageKey::TokenMetadataById.try_to_vec().unwrap(),
+            ),
+            metadata: LazyOption:: new(
+                StorageKey::NFTContractMetadata.try_to_vec().unwrap(),
+                Some(&metadata),
+            ),
+            token_id_counter: 0,
+            likes_per_candidate: LookupMap::new(
+                StorageKey::likes_per_candidate.try_to_vec().unwrap(),
+            ),
+            added_voter_list: LookupMap::new(StorageKey::AddedVoterList.try_to_vec().unwrap()),
+            voted_voter_list: LookupMap::new(StorageKey::voted_voter_list.try_to_vec().unwrap()),
+            is_election_closed: false,
+        };
+        // 初期化した変数を返す
+        this
+    }
+    // 初期化関数newを呼び出す
+    pub fn new_default_meta(owner_id: AccountId) -> Self{
+        Self:: new(
+            owner_id,
+            NFTContractMetadata {
+                spec: "nft-1.0.0".to_string(),
+                name: "Near Vote Contract".to_string(),
+                reference: "This contract is designed for fair election".to_string(),
+            },
+        )
+    }
 }
