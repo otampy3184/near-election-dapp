@@ -1,5 +1,5 @@
 // クレートルートのlib.rs内の全てを利用可能
-use create::*;
+use crate::*;
 
 // 変数宣言
 pub type TokenId = u128;
