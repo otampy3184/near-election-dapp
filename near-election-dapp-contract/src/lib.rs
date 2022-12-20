@@ -56,7 +56,7 @@ pub enum StorageKey {
     TokensPerKindInner { token_kind: TokenKind },
     TokensById,
     TokenMetadataById,
-    TokensPerTypeInner: { token_type_hash: CryptoHash },
+    TokensPerTypeInner{ token_type_hash: CryptoHash },
     NFTContractMetadata,
     LikesPerCandidate,
     AddedVoterList,

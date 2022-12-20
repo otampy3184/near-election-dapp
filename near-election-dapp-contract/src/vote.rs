@@ -1,4 +1,4 @@
-use crate::*
+use crate::*;
 
 #[near_bindegen]
 impl Contract {
